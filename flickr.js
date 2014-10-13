@@ -1,0 +1,72 @@
+/*
+	Copyright (c) 2014 - Jorg Thuijls
+
+	MIT Licensed
+
+*/
+module.exports = Flickr;
+
+/*
+	This extends Hexo. It injects the current document with function FlickrClient. 
+*/
+function Flickr(args, content, options) {
+	var id = args[0];
+	var d = FlickrClient.toString().replace(/[\r\n\t\f]/g, ''); // lame minifier to remove tabs, line feeds and carriage returns
+	var div = '<div class="gallery" id="' + id + '"><div style="text-align:center">Loading Gallery...</div></div>';
+	var script = '<script>if(!window["Flickr"]){window["Flickr"]=' + d + ';}window["' + id + '"]=new window["Flickr"]("129c18c06e38b4e8dcd8eb714ae7a8e1","' + id + '");window["' + id + '"].jsonp()</script>'
+	return div + script;
+}
+
+/*
+	Hexo plugins are asynchronous, so fetching a flickr gallery in Node when generating the page will fail. 
+	Instead, the function below is going to be injected into the current document (if it does not exist
+	already) and fetches gallery info as jsonp through the client, then builds an extremely simple 
+	gallery.
+*/
+function FlickrClient(k, s) {
+	var set = s;
+	var key = k;
+	var bigurl = 'https://farm{farm}.staticflickr.com/{server}/{id}_{secret}_b.jpg';
+
+	this.url = function(set) {
+		return 'https://api.flickr.com/services/rest/' + '?method=flickr.photosets.getPhotos' + '&api_key=' + key + '&photoset_id=' + set + '&format=json'
+	};
+
+	this.big = function(photo) {
+		return replace(bigurl, photo);
+	};
+
+	function replace(url, photo) {
+		for (var key in photo) {
+			var obj = photo[key];
+			url = url.replace('{' + key + '}', obj);
+		};
+		return url;
+	};
+
+	this.jsonp = function() {
+		var callbackName = 'jsonFlickrApi';
+		window[callbackName] = function(data) {
+			delete window[callbackName];
+			document.body.removeChild(script);
+			window[set].done(data);
+		};
+
+		var script = document.createElement('script');
+		script.src = this.url(set);
+		document.body.appendChild(script);
+	};
+
+	this.done = function(data) {
+		var p = data.photoset.photo;
+		var id = data.photoset.id;
+		var $gal = document.getElementById(id);
+
+		var html = '<div class="gallery-title"><h1>' + data.photoset.title + '</h1>';
+		for (var i = 0; i < p.length; i++) {
+			html += '<img src="' + this.big(p[i]) + '" />';
+		};
+		html += '</div>';
+		$gal.innerHTML = html;
+	};
+}
