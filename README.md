@@ -4,11 +4,11 @@
 
 This tag display a full Album from Flickr on your hexo powered blog or site. 
 
-It works but it's in the early stages. I plan on adding a tag to this for other Flickr functionality too and set it up so it can be used with Fancybox. This is all in the to-do pile right
+It works but it's in the early stages. I plan on adding a tag to this for other Flickr functionality too and set it up so it can be used with Fancybox. This is all in the to-do pile...
 
 ## Install
 
-`npm install --save hexo-renderer-flickr-album`
+`npm install --save hexo-tag-flickr-album`
 
 ## Usage
 
