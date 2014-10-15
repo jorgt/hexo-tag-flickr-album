@@ -15,7 +15,6 @@
 		b	large, 1024 on longest side*
 		o	original image, either a jpg, gif or png, depending on source format
 
-
 */
 var _ = require('lodash');
 var config = hexo.config
@@ -30,7 +29,7 @@ module.exports = Flickr;
 function Flickr(args, content, options) {
 	var id = args.shift();
 	_.extend(args, {size: 'b', style: 'simple'})
-	var d = FlickrClient.toString(); //FlickrClient.toString().replace(/[\r\n\t\f]/g, ''); // lame minifier to remove tabs, line feeds and carriage returns
+	var d = FlickrClient.toString().replace(/[\r\n\t\f]/g, ''); // lame minifier to remove tabs, line feeds and carriage returns
 	var div = '<div class="gallery" id="' + id + '"><div style="text-align:center">Loading Gallery...</div></div>';
 	var script = '<script>if(!window["Flickr"]){window["Flickr"]=' + d + ';}window["' + id + '"]=new window["Flickr"]("'+config.flickr_key+'","' + id + '");window["' + id + '"].jsonp()</script>'
 	return div + script;
