@@ -4,16 +4,22 @@
 	MIT Licensed
 
 */
+var _ = require('lodash');
+var config = hexo.config
+
 module.exports = Flickr;
 
 /*
 	This extends Hexo. It injects the current document with function FlickrClient. 
+
+	args: id, size, style
 */
 function Flickr(args, content, options) {
-	var id = args[0];
-	var d = FlickrClient.toString().replace(/[\r\n\t\f]/g, ''); // lame minifier to remove tabs, line feeds and carriage returns
+	var id = args.shift();
+	_.extend(args, {size: 'b', style: 'simple'})
+	var d = FlickrClient.toString(); //FlickrClient.toString().replace(/[\r\n\t\f]/g, ''); // lame minifier to remove tabs, line feeds and carriage returns
 	var div = '<div class="gallery" id="' + id + '"><div style="text-align:center">Loading Gallery...</div></div>';
-	var script = '<script>if(!window["Flickr"]){window["Flickr"]=' + d + ';}window["' + id + '"]=new window["Flickr"]("129c18c06e38b4e8dcd8eb714ae7a8e1","' + id + '");window["' + id + '"].jsonp()</script>'
+	var script = '<script>if(!window["Flickr"]){window["Flickr"]=' + d + ';}window["' + id + '"]=new window["Flickr"]("'+config.flickr_key+'","' + id + '");window["' + id + '"].jsonp()</script>'
 	return div + script;
 }
 
