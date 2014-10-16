@@ -5,6 +5,22 @@
 
 	Usage: {%- flickr-album <flickr album id> %}
 */
-Flickr = require('./flickr');
+Flickr = require('./src/flickr');
 
-hexo.extend.tag.register('flickr-album', Flickr);
+hexo.extend.tag.register('flickr-album', function(args) {
+	return Flickr(config(args, 'album'));
+});
+
+hexo.extend.tag.register('flickr-gallery', function(args) {
+	return Flickr(config(args, 'gallery'));
+});
+
+function config(args, type) {
+	return {
+		id: args[0] || null,
+		key: hexo.config.flickr_key,
+		display: args[1],
+		size: args[2],
+		type: type
+	};
+}
