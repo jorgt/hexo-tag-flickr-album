@@ -15,11 +15,43 @@ Add the following entry in `_config.yml`:
 ```
 flickr_key: <your_flickr_key>
 ```
+
 ## Usage
 
-In any page or post, use the tag:
+To load an album in any page or post, use the tag:
 ```
 {%- flickr-album <album id> %}
 ```
 
-You can find the ID in the url of an album on Flickr.
+To load a gallery, use this tag:
+```
+{%- flickr-gallery <gallery id> %}
+```
+
+You can find the ID in the url of an album or gallery on Flickr.
+
+## Options 
+
+```
+{%- flickr-gallery <album id> <size> <display type> %}
+```
+
+#### Size
+
+Size, from [Flickr](https://www.flickr.com/services/api/misc.urls.html), defaults to `b`:
+
+`s`   small square 75x75
+`q`   large square 150x150
+`t`   thumbnail, 100 on longest side
+`m`   small, 240 on longest side
+`n`   small, 320 on longest side
+`-`   medium, 500 on longest side
+`z`   medium 640, 640 on longest side
+`c`   medium 800, 800 on longest side†
+`b`   large, 1024 on longest side*
+`h`  large 1600, 1600 on longest side†
+`k`   large 2048, 2048 on longest side†
+
+#### Display
+
+At this point, only "simple" is allowed, which is just displaying all photos in a list. 
