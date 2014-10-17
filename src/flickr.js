@@ -1,4 +1,3 @@
-var _ = require('lodash');
 var FlickrClient = require('./flickr.client');
 /*
 	This class is called by the hexo tag	
@@ -21,10 +20,10 @@ function Flickr(conf) {
 
 	// better do this here so it hexo exits generation, as opposed to 
 	// having the gallery fail to load on the blog
-	if (_.isNull(_config.key)) {
+	if (_config.key === null) {
 		throw new Error("FLICKR: needs a Flickr key. Check _config.yml");
 	}
-	if (_.isNull(_config.id)) {
+	if (_config.id === null) {
 		throw new Error("FLICKR: needs a gallery or album ID");
 	}
 
