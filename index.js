@@ -19,8 +19,8 @@ function config(args, type) {
 	return {
 		id: args[0] || null,
 		key: hexo.config.flickr_key,
-		display: args[2],
-		size: args[1],
+		display: args[1],
+		size: args[2],
 		type: type
 	};
 }

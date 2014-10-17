@@ -2,38 +2,39 @@
 
 [Hexo.io](http://hexo.io/) is a full featured static site generator for Node. It supports plugins extending it's functionality, in this case a [tag](http://hexo.io/docs/plugins.html#Tag).
 
-This tag display a full Album from Flickr on your hexo powered blog or site. 
-
-It works but it's in the early stages. I plan on adding a tag to this for other Flickr functionality too and set it up so it can be used with Fancybox. This is all in the to-do pile...
+This tag display a full Album from Flickr on your hexo powered blog or site. It is also a work in progress. Please log any issues on github. 
 
 ## Install
-```
-npm install --save hexo-tag-flickr-album`
-```
-Add the following entry in `_config.yml`:
 
+Hexo-tag-flickr was already taken, so... hexo-tag-flickr-album it is. 
+
+```shell
+npm install hexo-tag-flickr-album --save
 ```
-flickr_key: <your_flickr_key>
+
+## Setup
+
+Add your flickr key to  `_config.yml`. You can get one on flickr's developer page. 
+
+```yml
+flickr_key: <your_key>
 ```
 
 ## Usage
 
-To load an album in any page or post, use the tag:
-```
-{%- flickr-album <album id> %}
+
+```ejs
+{%raw%}
+{%- flickr-album album_id display_type size %}
+{%endraw%}
 ```
 
-To load a gallery, use this tag:
-```
-{%- flickr-gallery <gallery id> %}
-```
+and 
 
-You can find the ID in the url of an album or gallery on Flickr.
-
-## Options 
-
-```
-{%- flickr-gallery <album id> <size> <display type> %}
+```ejs
+{%raw%}
+{%- flickr-gallery gallery_id display_type size %}
+{%endraw%}
 ```
 
 #### Size
@@ -49,9 +50,16 @@ Size, from [Flickr](https://www.flickr.com/services/api/misc.urls.html), default
 `z`   medium 640, 640 on longest side
 `c`   medium 800, 800 on longest side†
 `b`   large, 1024 on longest side*
-`h`  large 1600, 1600 on longest side†
+`h`   large 1600, 1600 on longest side†
 `k`   large 2048, 2048 on longest side†
 
 #### Display
 
-At this point, only "simple" is allowed, which is just displaying all photos in a list. 
+Defaults to **simple** when none given.
+
+**simple**, which just displays all pictures underneath each other.
+**fancybox**, use in combination with fancybox. This will load jQuery, Fancybox and Fancybox CSS from cdnjs if not loaded. 
+
+#### CSS
+
+Every gallery is loaded into a div with class `flickr-gallery`, in case you want to add your own CSS. 

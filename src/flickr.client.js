@@ -28,8 +28,8 @@ module.exports = function FlickrClient(_config) {
 			_createCallback();
 		},
 		gallery: function() {
+			_config.redirectTo = _config.display;
 			_config.display = "galleryRedirect";
-			_config.redirectTo = "simple";
 			_createScript();
 			_createCallback();
 		},
@@ -41,14 +41,66 @@ module.exports = function FlickrClient(_config) {
 
 	var _done = {
 		simple: function(data) {
-			var $gal = document.getElementById(_config.id.split('-')[1] || _config.id.split('-')[0]);
+			var $gal = _getGalleryDiv();
 			if (data.stat === "ok") {
 				var info = (data.photoset) ? data.photoset : data.photos;
 				var p = info.photo;
 				var title = info.title || _config.galleryInfo.title._content;
 				var html = '<div class="flickr-gallery-title"><h1>' + title + '</h1>';
 				for (var i = 0; i < p.length; i++) {
-					html += '<img class="flickr-gallery-photo" src="' + _buildPhoto(p[i]) + '" />';
+					html += '<img class="flickr-gallery-photo" src="' + _buildPhoto(p[i], _config.size) + '" />';
+				}
+				html += '</div>';
+				$gal.innerHTML = html;
+			} else {
+				$gal.innerHTML = "Sorry, could not load the requested photos.";
+			}
+		},
+		fancybox: function(data) {
+			var $gal = _getGalleryDiv();
+			$gal.style.textAlign = "center";
+			if (data.stat === "ok") {
+				if (typeof jQuery === 'undefined') {
+					var $jquery = document.createElement('script');
+					document.body.appendChild($jquery)
+
+					$jquery.onload = $jquery.onreadystatechange = function() {
+						$css = document.createElement('link');
+						$css.rel = "stylesheet";
+						$css.type = "text/css";
+						$css.href = "//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css";
+						document.getElementsByTagName("head")[0].appendChild($css);
+						var $fancybox = document.createElement('script');
+						document.body.appendChild($fancybox);
+						$fancybox.onload = $fancybox.onreadystatechange = function() {
+							$('a.' + _config.id).fancybox()
+						}
+						$fancybox.src = '//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js'
+					}
+
+					$jquery.src = '//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+
+				} else if (typeof $.fancybox === 'undefined') {
+					$css = document.createElement('link');
+					$css.rel = "stylesheet";
+					$css.type = "text/css";
+					$css.href = "//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css";
+					document.getElementsByTagName("head")[0].appendChild($css);
+					var $fancybox = document.createElement('script');
+					document.body.appendChild($fancybox);
+					$fancybox.onload = $fancybox.onreadystatechange = function() {
+						$('a.' + _config.id).fancybox()
+					}
+					$fancybox.src = '//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js';
+
+				}
+				var info = (data.photoset) ? data.photoset : data.photos;
+				var p = info.photo;
+				var title = info.title || _config.galleryInfo.title._content;
+				var html = '<div class="flickr-gallery-title"><h1>' + title + '</h1>';
+				for (var i = 0; i < p.length; i++) {
+					html += '<a style="display:inline-block" href="' + _buildPhoto(p[i], _config.size) + '" class="' + _config.id + '" rel="' + _config.id + '">';
+					html += '<img style="margin:0;display:inline-block;padding:1em;" src="' + _buildPhoto(p[i], 'q') + '" /></a>';
 				}
 				html += '</div>';
 				$gal.innerHTML = html;
@@ -65,14 +117,30 @@ module.exports = function FlickrClient(_config) {
 				conf.galleryInfo = data.gallery;
 				window[conf.id] = new window.Flickr(conf);
 				window[conf.id].jsonp();
+			} else {
+				var $gal = _getGalleryDiv();
+				$gal.innerHTML = "Sorry, could not load the requested photos.";
 			}
 		}
 	};
 
+	function _getGalleryDiv() {
+		return document.getElementById(_config.id.split('-')[1] || _config.id.split('-')[0]);
+	}
+
 	function _createScript() {
-		$script = document.createElement('script');
-		$script.src = _urls[_config.type].call(this, _config.id);
-		document.body.appendChild($script);
+		document.body.appendChild(_createTag('script', {
+			src: _urls[_config.type].call(this, _config.id)
+		}));
+	}
+
+	function _createTag(tag, opt) {
+		$tag = document.createElement(tag);
+		for (var key in opt) {
+			var obj = opt[key];
+			$tag[key] = obj;
+		}
+		return $tag;
 	}
 
 	function _createCallback() {
@@ -85,8 +153,8 @@ module.exports = function FlickrClient(_config) {
 		return '&api_key=' + _config.key;
 	}
 
-	function _buildPhoto(photo) {
-		photo.size = _config.size;
+	function _buildPhoto(photo, size) {
+		photo.size = size;
 		var url = _url.img;
 		for (var key in photo) {
 			var obj = photo[key];
