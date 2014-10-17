@@ -30,7 +30,7 @@ function Flickr(conf) {
 
 	var out = '';
 
-	var client = FlickrClient.toString(); //FlickrClient.toString().replace(/[\r\n\t\f]/g, '');
+	var client = FlickrClient.toString().replace(/[\r\n\t\f]/g, '');
 	var id = _config.id;
 
 	out += '<div class="flickr-' + _config.type + '" id="'+_config.id+'">Loading Gallery...</div>';

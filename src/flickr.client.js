@@ -62,37 +62,16 @@ module.exports = function FlickrClient(_config) {
 			if (data.stat === "ok") {
 				if (typeof jQuery === 'undefined') {
 					var $jquery = document.createElement('script');
-					document.body.appendChild($jquery)
+					document.body.appendChild($jquery);
 
 					$jquery.onload = $jquery.onreadystatechange = function() {
-						$css = document.createElement('link');
-						$css.rel = "stylesheet";
-						$css.type = "text/css";
-						$css.href = "//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css";
-						document.getElementsByTagName("head")[0].appendChild($css);
-						var $fancybox = document.createElement('script');
-						document.body.appendChild($fancybox);
-						$fancybox.onload = $fancybox.onreadystatechange = function() {
-							$('a.' + _config.id).fancybox()
-						}
-						$fancybox.src = '//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js'
-					}
+						_fancybox();
+					};
 
-					$jquery.src = '//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+					$jquery.src = '//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js';
 
 				} else if (typeof $.fancybox === 'undefined') {
-					$css = document.createElement('link');
-					$css.rel = "stylesheet";
-					$css.type = "text/css";
-					$css.href = "//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css";
-					document.getElementsByTagName("head")[0].appendChild($css);
-					var $fancybox = document.createElement('script');
-					document.body.appendChild($fancybox);
-					$fancybox.onload = $fancybox.onreadystatechange = function() {
-						$('a.' + _config.id).fancybox()
-					}
-					$fancybox.src = '//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js';
-
+					_fancybox();
 				}
 				var info = (data.photoset) ? data.photoset : data.photos;
 				var p = info.photo;
@@ -123,6 +102,20 @@ module.exports = function FlickrClient(_config) {
 			}
 		}
 	};
+
+	function _fancybox() {
+		$css = document.createElement('link');
+		$css.rel = "stylesheet";
+		$css.type = "text/css";
+		$css.href = "//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css";
+		document.getElementsByTagName("head")[0].appendChild($css);
+		var $fancybox = document.createElement('script');
+		document.body.appendChild($fancybox);
+		$fancybox.onload = $fancybox.onreadystatechange = function() {
+			$('a.' + _config.id).fancybox();
+		};
+		$fancybox.src = '//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js';
+	}
 
 	function _getGalleryDiv() {
 		return document.getElementById(_config.id.split('-')[1] || _config.id.split('-')[0]);
