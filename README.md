@@ -24,17 +24,13 @@ flickr_key: <your_key>
 
 
 ```ejs
-{%raw%}
 {%- flickr-album album_id display_type size %}
-{%endraw%}
 ```
 
 and 
 
 ```ejs
-{%raw%}
 {%- flickr-gallery gallery_id display_type size %}
-{%endraw%}
 ```
 
 #### Size
