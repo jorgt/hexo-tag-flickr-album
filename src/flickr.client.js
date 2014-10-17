@@ -161,7 +161,6 @@ module.exports = function FlickrClient(_config) {
 	};
 
 	this.done = function(data) {
-		console.log(data);
 		_done[_config.display].call(this, data);
 	};
 };

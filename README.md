@@ -4,6 +4,10 @@
 
 This tag display a full Album from Flickr on your hexo powered blog or site. It is also a work in progress. Please log any issues on github. 
 
+## Demo
+
+Here's a [demo](http://jorg.thuijls.net/2014/10/17/Flickr-Album-Tag-Demo/)
+
 ## Install
 
 Hexo-tag-flickr was already taken, so... hexo-tag-flickr-album it is. 
