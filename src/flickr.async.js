@@ -1,20 +1,11 @@
-var FlickrClient = require('./flickr.client');
-/*
-	This class is called by the hexo tag	
-*/
-module.exports = function(config) {
-	return Flickr(config);
-};
+var client = require('./flickr.client');
 
-
-function Flickr(conf) {
-	'use strict';
-
+module.exports = function flickr(config) {
 	var _config = {
 		id: conf.id || null,
 		key: conf.key || null,
-		type: conf.type || 'album', 
-		size: conf.size || 'b', 
+		type: conf.type || 'album',
+		size: conf.size || 'b',
 		display: conf.display || 'simple'
 	};
 
@@ -26,4 +17,6 @@ function Flickr(conf) {
 	if (_config.id === null) {
 		throw new Error("FLICKR: needs a gallery or album ID");
 	}
-}
+
+	client(config);
+};

@@ -7,10 +7,10 @@ module.exports = function(grunt) {
 			specs: {
 				options: {
 					ui: 'bdd',
-					reporter: 'spec',
-					require: './spec/helpers/chai'
+					reporter: 'spec'
+					//require: './spec/helpers/chai'
 				},
-				src: ['spec/*.spec.js', 'spec/**/*.spec.js']
+				src: ['tests/**/*.js']
 			}
 		},
 
