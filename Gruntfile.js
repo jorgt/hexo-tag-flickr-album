@@ -7,7 +7,8 @@ module.exports = function(grunt) {
 			specs: {
 				options: {
 					ui: 'bdd',
-					reporter: 'spec'
+					reporter: 'spec',
+					debug: true
 					//require: './spec/helpers/chai'
 				},
 				src: ['tests/**/*.js']
