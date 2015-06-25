@@ -1,6 +1,6 @@
 {
   "name": "hexo-tag-flickr-album",
-  "version": "1.0.2",
+  "version": "3.0.0",
   "description": "A Flickr album loading tag for Hexo.io",
   "main": "index.js",
   "scripts": {
