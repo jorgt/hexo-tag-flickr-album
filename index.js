@@ -8,12 +8,16 @@
 flickr = require('./src/flickr');
 formatters = require('./src/formatters');
 
-hexo.extend.tag.register('flickr-album', function(args) {
+hexo.extend.tag.register('flickralbum', function(args) {
 	return flickr(config(args, 'album', formatters.album));
+}, {
+	async: true
 });
 
-hexo.extend.tag.register('flickr-gallery', function(args) {
+hexo.extend.tag.register('flickrgallery', function(args) {
 	return flickr(config(args, 'gallery', formatters.gallery));
+}, {
+	async: true
 });
 
 function config(args, type, formatter) {

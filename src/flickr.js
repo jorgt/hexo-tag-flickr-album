@@ -53,6 +53,7 @@
 					data += chunk;
 				});
 				response.on('end', function() {
+					data = (typeof data === 'string')?JSON.parse(data):data;
 					if (response.statusCode === 200) {
 						deferred.resolve(config.formatter(data));
 					} else {
@@ -79,7 +80,7 @@
 				});
 				response1.on('end', function() {
 					if (response1.statusCode === 200) {
-						data1 = JSON.parse(data1);
+						data1 = (typeof data1 === 'string')?JSON.parse(data1):data1;
 						if (typeof data1.gallery !== 'undefined' && typeof data1.gallery.id !== 'undefined') {
 							config.id = data1.gallery.id;
 							
@@ -89,7 +90,7 @@
 									data2 += chunk;
 								});
 								response2.on('end', function() {
-									data2 = JSON.parse(data2);
+									data2 = (typeof data2 === 'string')?JSON.parse(data2):data2;
 									data2.photos.title = data1.gallery.title._content;
 									data2.photos.id = data1.gallery.id;
 									if (response2.statusCode === 200) {
