@@ -5,9 +5,11 @@ var https = require('https');
 var flickr = require('./../src/flickr');
 var formatters = require('./../src/formatters');
 var PassThrough = require('stream').PassThrough;
+var key = require('../key.json');
+
 var album = {
 	id: '72157648055335157',
-	key: '129c18c06e38b4e8dcd8eb714ae7a8e1',
+	key: key.flickr,
 	type: 'album',
 	formatter: function(str) {
 		return fakeAlbum();
@@ -15,35 +17,35 @@ var album = {
 }
 var gallery = {
 	id: '72157648771295401',
-	key: '129c18c06e38b4e8dcd8eb714ae7a8e1',
+	key: key.flickr,
 	type: 'gallery',
-	formatter: formatters.gallery
+	formatter: formatters.gallery.simple
 }
 
 describe('/src/formatters', function() {
 
-	describe('#album', function() {
+	describe('#album.simple', function() {
 		it('has to be a function', function(done) {
-			expect(formatters.album).to.be.an.instanceof(Function);
+			expect(formatters.album.simple).to.be.an.instanceof(Function);
 			done();
 		});
 
 		it('has to parse album JSON into valid HTML', function(done) {
-			var html = formatters.album(fakeAlbum());
+			var html = formatters.album.simple(fakeAlbum());
 			expect(html).to.be.a('string');
 			expect(html).to.be.equal(fakeHTMLAlbum());
 			done();
 		});
 	});
 
-	describe('#gallery', function() {
+	describe('#gallery.simple', function() {
 		it('has to be a function', function(done) {
-			expect(formatters.gallery).to.be.an.instanceof(Function);
+			expect(formatters.gallery.simple).to.be.an.instanceof(Function);
 			done();
 		});
 
 		it('has to parse gallery JSON into valid HTML', function(done) {
-			var html = formatters.gallery(fakeGallery());
+			var html = formatters.gallery.simple(fakeGallery());
 			expect(html).to.be.a('string');
 			expect(html).to.be.equal(fakeHTMLGallery());
 			done();

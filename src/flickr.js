@@ -19,8 +19,7 @@
 			id: conf.id,
 			key: conf.key,
 			type: conf.type,
-			size: conf.size || 'b',
-			display: conf.display || 'simple',
+			size: conf.size,
 			formatter: conf.formatter
 		};
 

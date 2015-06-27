@@ -8,25 +8,18 @@
 flickr = require('./src/flickr');
 formatters = require('./src/formatters');
 
-hexo.extend.tag.register('flickralbum', function(args) {
-	return flickr(config(args, 'album', formatters.album));
+hexo.extend.tag.register('flickr', function(args) {
+	return flickr(config(args, formatters.album));
 }, {
 	async: true
 });
 
-hexo.extend.tag.register('flickrgallery', function(args) {
-	return flickr(config(args, 'gallery', formatters.gallery));
-}, {
-	async: true
-});
-
-function config(args, type, formatter) {
+function config(args, formatter) {
 	return {
-		id: args[0] || null,
+		id: args[1],
 		key: hexo.config.flickr_key,
-		display: args[1],
-		type: type,
-		formatter: formatter,
-		size: args[2],
+		type: args[0],
+		formatter: (args[2] === 'fancybox') ? formatter.fancybox : formatter.simple,
+		size: args[3] || 'b',
 	};
 }

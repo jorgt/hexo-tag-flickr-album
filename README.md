@@ -10,12 +10,24 @@ This tag display a full Album from Flickr on your hexo powered blog or site. It 
 
 Here's a [demo](http://jorg.thuijls.net/2014/10/17/Flickr-Album-Tag-Demo/)
 
-## Install
+## Versions
+
+Hexo changed the way tags worked between versions 2.x and 3.x. The main difference is that we can now have asynchronous tag renderer, which means I am now able to change the awkward flickr rendering the first version used. See, Flickr needs an API call to get album and photo information. Version 1 of this tag injected a script in the client, which did all the fetching and rendering. This can now be done by Hexo: less work for the browser!
+
+The drawback concerning this tag? Can't seem to get the dash in the tag name to work: `flickr-album` is now `flickr album`, and `flickr-gallery` is now `flickr gallery`.
+
+## Installation for Hexo 3.x
 
 Hexo-tag-flickr was already taken, so... hexo-tag-flickr-album it is. 
 
 ```shell
-npm install hexo-tag-flickr-album --save
+npm install hexo-tag-flickr-album@3.x --save
+```
+
+## Installation for Hexo 2.x
+
+```shell
+npm install hexo-tag-flickr-album@"< 3"
 ```
 
 ## Setup
@@ -26,7 +38,7 @@ Add your flickr key to  `_config.yml`. You can get one on flickr's developer pag
 flickr_key: <your_key>
 ```
 
-## Usage
+## Usage (for Hexo < 3)
 
 
 ```ejs

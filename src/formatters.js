@@ -3,7 +3,9 @@
 
 	var url = 'https://farm{farm}.staticflickr.com/{server}/{id}_{secret}_{size}.jpg';
 
-	module.exports.album = function(album) {
+	module.exports.album = {};
+	module.exports.gallery = {};
+	module.exports.album.simple = function(album) {
 		var d = album.photoset;
 		var out = [];
 
@@ -17,7 +19,7 @@
 		return out.join('');
 	};
 
-	module.exports.gallery = function(gallery) {
+	module.exports.gallery.simple = function(gallery) {
 		var d = gallery.photos;
 		var out = [];
 
@@ -29,6 +31,14 @@
 		}
 		out.push('</div>');
 		return out.join('');
+	};
+
+	module.exports.album.fancybox = function(album) {
+
+	};
+
+	module.exports.gallery.fancybox = function(gallery) {
+
 	};
 
 	function _photoURL(photo) {
