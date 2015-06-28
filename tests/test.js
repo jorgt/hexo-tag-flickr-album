@@ -51,6 +51,34 @@ describe('/src/formatters', function() {
 			done();
 		});
 	});
+
+	describe('#album.fancybox', function() {
+		it('has to be a function', function(done) {
+			expect(formatters.album.simple).to.be.an.instanceof(Function);
+			done();
+		});
+
+		it('has to parse album JSON into valid HTML', function(done) {
+			var html = formatters.album.fancybox(fakeAlbum());
+			expect(html).to.be.a('string');
+			//expect(html).to.be.equal(fakeHTMLAlbum());
+			done();
+		});
+	});
+
+	describe('#gallery.fancybox', function() {
+		it('has to be a function', function(done) {
+			expect(formatters.gallery.simple).to.be.an.instanceof(Function);
+			done();
+		});
+
+		it('has to parse gallery JSON into valid HTML', function(done) {
+			//var html = formatters.gallery.simple(fakeGallery());
+			//expect(html).to.be.a('string');
+			//expect(html).to.be.equal(fakeHTMLGallery());
+			done('implement');
+		});
+	});
 });
 
 describe('/src/flickr unit test', function() {

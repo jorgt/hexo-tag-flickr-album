@@ -9,17 +9,18 @@ flickr = require('./src/flickr');
 formatters = require('./src/formatters');
 
 hexo.extend.tag.register('flickr', function(args) {
-	return flickr(config(args, formatters.album));
+	return flickr(config(args, formatters));
 }, {
 	async: true
 });
 
 function config(args, formatter) {
+	var type = args[0];
 	return {
 		id: args[1],
 		key: hexo.config.flickr_key,
-		type: args[0],
-		formatter: (args[2] === 'fancybox') ? formatter.fancybox : formatter.simple,
+		type: type,
+		formatter: (args[2] === 'fancybox') ? formatter[type].fancybox : formatter[type].simple,
 		size: args[3] || 'b',
 	};
 }
