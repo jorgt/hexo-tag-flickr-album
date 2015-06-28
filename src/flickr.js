@@ -52,7 +52,8 @@
 					data += chunk;
 				});
 				response.on('end', function() {
-					data = (typeof data === 'string')?JSON.parse(data):data;
+					data = (typeof data === 'string') ? JSON.parse(data) : data;
+					data.photoset.size = config.size;
 					if (response.statusCode === 200) {
 						deferred.resolve(config.formatter(data));
 					} else {
@@ -79,19 +80,20 @@
 				});
 				response1.on('end', function() {
 					if (response1.statusCode === 200) {
-						data1 = (typeof data1 === 'string')?JSON.parse(data1):data1;
+						data1 = (typeof data1 === 'string') ? JSON.parse(data1) : data1;
 						if (typeof data1.gallery !== 'undefined' && typeof data1.gallery.id !== 'undefined') {
 							config.id = data1.gallery.id;
-							
+
 							var req2 = https.request(_galleryPhotoUrl(config), function(response2) {
 								var data2 = '';
 								response2.on('data', function(chunk) {
 									data2 += chunk;
 								});
 								response2.on('end', function() {
-									data2 = (typeof data2 === 'string')?JSON.parse(data2):data2;
+									data2 = (typeof data2 === 'string') ? JSON.parse(data2) : data2;
 									data2.photos.title = data1.gallery.title._content;
 									data2.photos.id = data1.gallery.id;
+									data2.photos.size = config.size;
 									if (response2.statusCode === 200) {
 										deferred.resolve(config.formatter(data2));
 									} else {
@@ -121,10 +123,6 @@
 			req1.end();
 
 			return deferred.promise;
-		},
-
-		galleryPhotos: function(config) {
-
 		}
 	};
 

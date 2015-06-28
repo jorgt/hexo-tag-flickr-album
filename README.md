@@ -1,10 +1,10 @@
 # hexo-tag-flickr-album
 
-> Not 3.0.0 compatible yet. Fix is in the works. 
+> Now version 3.x compatible.  
 
 [Hexo.io](http://hexo.io/) is a full featured static site generator for Node. It supports plugins extending it's functionality, in this case a [tag](http://hexo.io/docs/plugins.html#Tag).
 
-This tag display a full Album from Flickr on your hexo powered blog or site. It is also a work in progress. Please log any issues on github. 
+This tag display a full Album from Flickr on your hexo powered blog or site.Please log any issues on github. 
 
 ## Demo
 
@@ -12,22 +12,20 @@ Here's a [demo](http://jorg.thuijls.net/2014/10/17/Flickr-Album-Tag-Demo/)
 
 ## Versions
 
-Hexo changed the way tags worked between versions 2.x and 3.x. The main difference is that we can now have asynchronous tag renderer, which means I am now able to change the awkward flickr rendering the first version used. See, Flickr needs an API call to get album and photo information. Version 1 of this tag injected a script in the client, which did all the fetching and rendering. This can now be done by Hexo: less work for the browser!
+Hexo changed the way tags worked between versions 2.x and 3.x. The main difference is that we can now have asynchronous tag renderer. From the [doco](https://github.com/hexojs/hexo/wiki/Breaking-Changes-in-Hexo-3.0):
+
+    Since Hexo 3, we use Nunjucks instead of Swig for post rendering. They share simliar syntax but Nunjucks provides async rendering. 
+
+which means I am now able to change the awkward flickr rendering the first version used. See, Flickr needs an API call to get album and photo information. Version 1 of this tag injected a script into the renderered HTML, which did all the fetching and transforming. This can now be done by Hexo: less work for the browser! 
 
 The drawback concerning this tag? Can't seem to get the dash in the tag name to work: `flickr-album` is now `flickr album`, and `flickr-gallery` is now `flickr gallery`.
 
-## Installation for Hexo 3.x
+## Installation
 
 Hexo-tag-flickr was already taken, so... hexo-tag-flickr-album it is. 
 
 ```shell
 npm install hexo-tag-flickr-album@3.x --save
-```
-
-## Installation for Hexo 2.x
-
-```shell
-npm install hexo-tag-flickr-album@"< 3"
 ```
 
 ## Setup
@@ -38,7 +36,17 @@ Add your flickr key to  `_config.yml`. You can get one on flickr's developer pag
 flickr_key: <your_key>
 ```
 
-## Usage (for Hexo < 3)
+## Legacy
+
+Tag usage is slightly different for the older versions of hexo. Setup is the same: add your flickr API key to `_config.yml`.
+
+### Installation for Hexo 2.x
+
+```shell
+npm install hexo-tag-flickr-album@"< 3" --save
+```
+
+### Usage for hexo 2.x
 
 
 ```ejs
@@ -51,9 +59,9 @@ and
 {%- flickr-gallery gallery_id display_type size %}
 ```
 
-#### Size
+## A word on available sizes
 
-Size, from [Flickr](https://www.flickr.com/services/api/misc.urls.html), defaults to `b`:
+Size, from [Flickr](https://www.flickr.com/services/api/misc.urls.html). This tag defaults to `b` when unspecified:
 
 `s`   small square 75x75
 `q`   large square 150x150
@@ -67,7 +75,7 @@ Size, from [Flickr](https://www.flickr.com/services/api/misc.urls.html), default
 `h`   large 1600, 1600 on longest side†
 `k`   large 2048, 2048 on longest side†
 
-#### Display
+## Display
 
 Defaults to **simple** when none given.
 

@@ -73,10 +73,11 @@ describe('/src/formatters', function() {
 		});
 
 		it('has to parse gallery JSON into valid HTML', function(done) {
-			//var html = formatters.gallery.simple(fakeGallery());
-			//expect(html).to.be.a('string');
-			//expect(html).to.be.equal(fakeHTMLGallery());
-			done('implement');
+			var html = formatters.gallery.simple(fakeGallery());
+			
+			expect(html).to.be.a('string');
+			expect(html).to.be.equal(fakeHTMLGallery());
+			done();
 		});
 	});
 });
@@ -173,8 +174,6 @@ describe('/src/flickr connection test', function() {
 		it('calls Flickr', function(done) {
 			flickr(album, 'album').then(function(data) {
 				expect(data).to.be.defined;
-				//console.log(JSON.stringify(data));
-				//expect(JSON.stringify(data)).to.match(/^<div class=\\\"flickr-album\\\"/);
 				done();
 			}, function(err) {
 				done('Error');
@@ -194,6 +193,10 @@ describe('/src/flickr connection test', function() {
 		});
 	});
 });
+
+function fakeHTMLGallery() {
+	return '<div class="flickr-album" id="66911286-72157648771295401"><h1 class="flickr-album-title">Balloon Fiesta 2014</h1><img class="flickr-gallery-photo" src="https://farm4.staticflickr.com/3954/15343380427_d6847e2d43_b.jpg"><img class="flickr-gallery-photo" src="https://farm4.staticflickr.com/3950/15336291659_f372beed7d_b.jpg"><img class="flickr-gallery-photo" src="https://farm6.staticflickr.com/5606/15332708990_a47cdf75e0_b.jpg"><img class="flickr-gallery-photo" src="https://farm4.staticflickr.com/3927/15327071408_63486da9b0_b.jpg"><img class="flickr-gallery-photo" src="https://farm3.staticflickr.com/2946/15507012805_063ca3c9b1_b.jpg"><img class="flickr-gallery-photo" src="https://farm4.staticflickr.com/3952/15483868046_b1369ff9de_b.jpg"><img class="flickr-gallery-photo" src="https://farm3.staticflickr.com/2945/15510842475_329548e49c_b.jpg"><img class="flickr-gallery-photo" src="https://farm4.staticflickr.com/3951/15345391848_efc87fce1e_b.jpg"><img class="flickr-gallery-photo" src="https://farm4.staticflickr.com/3935/15349508750_f24f1903e3_b.jpg"><img class="flickr-gallery-photo" src="https://farm6.staticflickr.com/5614/15330218657_41e1764721_b.jpg"><img class="flickr-gallery-photo" src="https://farm4.staticflickr.com/3935/15508092492_5fdddb4074_b.jpg"><img class="flickr-gallery-photo" src="https://farm4.staticflickr.com/3931/15321105998_778686f8de_b.jpg"><img class="flickr-gallery-photo" src="https://farm4.staticflickr.com/3930/15499824391_a6563aafd9_b.jpg"><img class="flickr-gallery-photo" src="https://farm6.staticflickr.com/5612/15313508360_498dd4b092_b.jpg"><img class="flickr-gallery-photo" src="https://farm6.staticflickr.com/5599/15488226212_4a85a036d7_b.jpg"><img class="flickr-gallery-photo" src="https://farm4.staticflickr.com/3928/15469793275_f03d63dfd5_b.jpg"><img class="flickr-gallery-photo" src="https://farm4.staticflickr.com/3932/15283175958_b39f1f9438_b.jpg"><img class="flickr-gallery-photo" src="https://farm6.staticflickr.com/5601/15313666088_a1dd846beb_b.jpg"></div>';
+}
 
 function fakeGallery() {
 	return {
@@ -454,10 +457,6 @@ function fakeGalleryURL() {
 		},
 		"stat": "ok"
 	}
-}
-
-function fakeHTMLGallery() {
-	return '<div class="flickr-album" id="66911286-72157648771295401"><h1 class="flickr-album-title">Balloon Fiesta 2014</h1><img class="flickr-gallery-photo" src="https://farm4.staticflickr.com/3954/15343380427_d6847e2d43_b.jpg"><img class="flickr-gallery-photo" src="https://farm4.staticflickr.com/3950/15336291659_f372beed7d_b.jpg"><img class="flickr-gallery-photo" src="https://farm6.staticflickr.com/5606/15332708990_a47cdf75e0_b.jpg"><img class="flickr-gallery-photo" src="https://farm4.staticflickr.com/3927/15327071408_63486da9b0_b.jpg"><img class="flickr-gallery-photo" src="https://farm3.staticflickr.com/2946/15507012805_063ca3c9b1_b.jpg"><img class="flickr-gallery-photo" src="https://farm4.staticflickr.com/3952/15483868046_b1369ff9de_b.jpg"><img class="flickr-gallery-photo" src="https://farm3.staticflickr.com/2945/15510842475_329548e49c_b.jpg"><img class="flickr-gallery-photo" src="https://farm4.staticflickr.com/3951/15345391848_efc87fce1e_b.jpg"><img class="flickr-gallery-photo" src="https://farm4.staticflickr.com/3935/15349508750_f24f1903e3_b.jpg"><img class="flickr-gallery-photo" src="https://farm6.staticflickr.com/5614/15330218657_41e1764721_b.jpg"><img class="flickr-gallery-photo" src="https://farm4.staticflickr.com/3935/15508092492_5fdddb4074_b.jpg"><img class="flickr-gallery-photo" src="https://farm4.staticflickr.com/3931/15321105998_778686f8de_b.jpg"><img class="flickr-gallery-photo" src="https://farm4.staticflickr.com/3930/15499824391_a6563aafd9_b.jpg"><img class="flickr-gallery-photo" src="https://farm6.staticflickr.com/5612/15313508360_498dd4b092_b.jpg"><img class="flickr-gallery-photo" src="https://farm6.staticflickr.com/5599/15488226212_4a85a036d7_b.jpg"><img class="flickr-gallery-photo" src="https://farm4.staticflickr.com/3928/15469793275_f03d63dfd5_b.jpg"><img class="flickr-gallery-photo" src="https://farm4.staticflickr.com/3932/15283175958_b39f1f9438_b.jpg"><img class="flickr-gallery-photo" src="https://farm6.staticflickr.com/5601/15313666088_a1dd846beb_b.jpg"></div>';
 }
 
 function fakeAlbum() {

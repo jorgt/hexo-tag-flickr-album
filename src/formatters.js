@@ -14,7 +14,7 @@
 		out.push('<h1 class="flickr-album-title">' + d.title + '</h1>');
 		for (var i = 0; i < d.photo.length; i++) {
 			var img = d.photo[i];
-			out.push('<img class="flickr-gallery-photo" src="' + _photoURL(img) + '">');
+			out.push('<img class="flickr-gallery-photo" src="' + _photoURL(img, d.size) + '">');
 		}
 		out.push('</div>');
 		return out.join('');
@@ -28,7 +28,7 @@
 		out.push('<h1 class="flickr-album-title">' + d.title + '</h1>');
 		for (var i = 0; i < d.photo.length; i++) {
 			var img = d.photo[i];
-			out.push('<img class="flickr-gallery-photo" src="' + _photoURL(img) + '">');
+			out.push('<img class="flickr-gallery-photo" src="' + _photoURL(img, d.size) + '">');
 		}
 		out.push('</div>');
 		return out.join('');
@@ -36,13 +36,13 @@
 
 	module.exports.album.fancybox = function(album) {
 		var d = album.photoset;
-		var out = [insertFancybox()];
+		var out = [insertFancybox(d.id)];
 
 		out.push('<div class="flickr-album" id="' + d.id + '">');
 		out.push('<h1 class="flickr-album-title">' + d.title + '</h1>');
 		for (var i = 0; i < d.photo.length; i++) {
 			var img = d.photo[i];
-			out.push('<a data-lightbox="' + d.id + '" href="' + _photoURL(img, 't') + '>' + _photoURL(img) + '"</a>');
+			out.push('<a data-lightbox="' + d.id + '" href="' + _photoURL(img, 't') + '>' + _photoURL(img, d.size) + '"</a>');
 		}
 		out.push('</div>');
 		return out.join('');
@@ -50,13 +50,14 @@
 
 	module.exports.gallery.fancybox = function(gallery) {
 		var d = gallery.photos;
-		var out = [insertFancybox()];
+		var out = [insertFancybox(d.id)];
 
 		out.push('<div class="flickr-album" id="' + d.id + '">');
 		out.push('<h1 class="flickr-album-title">' + d.title + '</h1>');
 		for (var i = 0; i < d.photo.length; i++) {
 			var img = d.photo[i];
-			out.push('<a data-lightbox="' + d.id + '" href="' + _photoURL(img) + '"><img src="' + _photoURL(img, 'm') + '" /></a>');
+			out.push('<a style="display:inline-block" data-lightbox="' + d.id + '" href="' + _photoURL(img) + '">');
+			out.push('<img style="margin:0;display:inline-block;padding:1em;" src="' + _photoURL(img, 'q') + '" /></a>');
 		}
 		out.push('</div>');
 
@@ -77,30 +78,28 @@
 		var func = insert.toString().replace(/[\n\r\t]/gi, '');
 		return ('<script>(function(){' + func + '; insert()})()</script>');
 
-		function insert() {
+		function insert(id) {
 			if (window.hexotagflickralbum !== true) {
-				var head = document.getElementsByTagName('head')[0];
-				var s = document.createElement('link');
-				s.setAttribute('type', 'text/css');
-				s.setAttribute('href', 'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css');
-				if (typeof $ === 'undefined') {
-					var j = document.createElement('script');
-					j.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js');
-					document.body.appendChild(j);
-					j.onload = function() {
+				var $jquery = document.createElement('script');
+				document.body.appendChild($jquery);
+				$jquery.onload = $jquery.onreadystatechange = function() {
+					$css = document.createElement('link');
+					$css.rel = "stylesheet";
+					$css.type = "text/css";
+					$css.href = "//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css";
+					document.getElementsByTagName("head")[0].appendChild($css);
+					var $fancybox = document.createElement('script');
+					document.body.appendChild($fancybox);
+					$fancybox.onload = $fancybox.onreadystatechange = function() {
+						$('a').fancybox();
+						window.hexotagflickralbum = true;
+					};
+					$fancybox.src = '//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js';
+				};
+				$jquery.src = '//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js';
 
-						$(document).ready(function() {
-							var q = document.createElement('script');
-							q.setAttribute('src', 'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js');
-
-							head.appendChild(s);
-
-							document.body.appendChild(q);
-						});
-					}
-				}
-				window.hexotagflickralbum = true;
-				console.log('attaching jquery');
+			} else {
+				$('a').fancybox();
 			}
 		}
 	}
