@@ -36,6 +36,19 @@ Add your flickr key to  `_config.yml`. You can get one on flickr's developer pag
 flickr_key: <your_key>
 ```
 
+## Usage
+
+```ejs
+{%- flickr album album_id display_type size %}
+```
+
+and 
+
+```ejs
+{%- flickr gallery gallery_id display_type size %}
+```
+
+
 ## Legacy
 
 Tag usage is slightly different for the older versions of hexo. Setup is the same: add your flickr API key to `_config.yml`.
