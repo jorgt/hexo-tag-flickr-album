@@ -42,9 +42,11 @@
 		out.push('<h1 class="flickr-album-title">' + d.title + '</h1>');
 		for (var i = 0; i < d.photo.length; i++) {
 			var img = d.photo[i];
-			out.push('<a data-lightbox="' + d.id + '" href="' + _photoURL(img, 't') + '>' + _photoURL(img, d.size) + '"</a>');
+			out.push('<a style="display:inline-block" data-lightbox="' + d.id + '" href="' + _photoURL(img) + '">');
+			out.push('<img style="margin:0;display:inline-block;padding:1em;" src="' + _photoURL(img, 'q') + '" /></a>');
 		}
 		out.push('</div>');
+
 		return out.join('');
 	};
 
