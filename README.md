@@ -1,5 +1,7 @@
 # hexo-tag-flickr-album
 
+1/3/2016: No longer actively maintained because I moved away from Hexo. 
+
 > Now version 3.x compatible.  
 
 [Hexo.io](http://hexo.io/) is a full featured static site generator for Node. It supports plugins extending it's functionality, in this case a [tag](http://hexo.io/docs/plugins.html#Tag).
@@ -8,7 +10,7 @@ This tag display a full Album from Flickr on your hexo powered blog or site.Plea
 
 ## Demo
 
-Here's a [demo](http://jorg.thuijls.net/2014/10/17/Flickr-Album-Tag-Demo/)
+Here's a [demo](http://jorg.thuijls.net/flickr-album-tag-demo.html)
 
 ## Versions
 
